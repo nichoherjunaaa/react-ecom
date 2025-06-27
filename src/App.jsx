@@ -1,19 +1,13 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Navbar from './components/Navbar'
-import Home from './pages/Home'
-import Footer from './components/Footer'
+import { RouterProvider } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import router from "./router/router";
+const queryClient = new QueryClient();
 
 function App() {
-
   return (
-    <>
-      <Navbar />
-      <Home/>
-      <Footer/>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   )
 }
 
