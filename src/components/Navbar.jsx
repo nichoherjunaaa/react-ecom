@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom';
 const Navbar = () => {
     const toggleMobileMenu = () => {
         // Implement your mobile menu toggle logic here
@@ -36,9 +36,9 @@ const Navbar = () => {
                         <div className="flex items-center space-x-4">
                             {/* Login & Register Buttons */}
                             <div className="hidden md:flex items-center space-x-2">
-                                <button className="text-gray-600 hover:text-primary transition-colors px-3 py-1 rounded-lg border border-gray-300 hover:border-primary">
+                                <Link to="/login" className="text-gray-600 hover:text-primary transition-colors px-3 py-1 rounded-lg border border-gray-300 hover:border-primary">
                                     Masuk
-                                </button>
+                                </Link>
                                 <button className="bg-primary text-white px-3 py-1 rounded-lg hover:bg-primary/90 transition-colors">
                                     Daftar
                                 </button>

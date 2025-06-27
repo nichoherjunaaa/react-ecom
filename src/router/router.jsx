@@ -4,6 +4,7 @@ import Home from '../pages/Home'
 import MainLayout from '../layout/MainLayout'
 import Products from '../pages/Products'
 import NotFound from '../pages/NotFound'
+import LoginAuth from '../pages/Auth/Login/LoginAuth'
 const router = createBrowserRouter([
     {
         path: "/",
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
     {
         path : "*",
         element: <NotFound/>
+    },
+    {
+        path: "/login",
+        element: <LoginAuth/>
     }
 ])
 
