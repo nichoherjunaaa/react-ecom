@@ -6,7 +6,7 @@ const CardProduct = ({product}) => {
         <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow group">
             <div className="relative">
                 <img
-                    src="/placeholder.svg?height=200&width=300"
+                    src={product.image}
                     alt={product.name}
                     className="w-full h-48 object-cover"
                 />
