@@ -1,6 +1,6 @@
 import React from 'react'
 import { formatCurrency, getTagStyle, getTagText, renderStars } from '../utils/helper'
-const CardProduct = ({product}) => {
+const CardProduct = ({ product }) => {
     return (
         <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow group">
             <div className="relative">
@@ -24,12 +24,10 @@ const CardProduct = ({product}) => {
                 </h4>
                 <p className="text-gray-600 text-sm mb-2">{product.location}</p>
                 <div className="flex items-center mb-2">
-                    {product?.rating !== 0 ? (
+                    {product.rating !== 0 && (
                         <div className="flex text-yellow-400">
                             {renderStars(product.rating)}
                         </div>
-                    ) : (
-                        <span className="text-gray-600 text-sm">Belum ada rating</span>
                     )}
                     <span className="text-gray-600 text-sm ml-2">({product.review})</span>
                 </div>

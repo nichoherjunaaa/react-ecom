@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-
+import heroImage from '../assets/hero-image.png';
 const Hero = () => {
     return (
         <section className="bg-gradient-to-r from-primary to-secondary text-white py-16">
@@ -19,7 +19,7 @@ const Hero = () => {
                         </div>
                     </div>
                     <div className="hidden lg:block">
-                        <img src="../assets/hero.png" alt="Hero" className="rounded-lg shadow-2xl" />
+                        <img src={heroImage} alt="Hero" className="rounded-full shadow-xl w-sm ml-auto" />
                     </div>
                 </div>
             </div>

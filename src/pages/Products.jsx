@@ -3,18 +3,23 @@ import CardProduct from '../components/CardProduct'
 import { renderStars } from '../utils/helper'
 import { useState, useEffect } from 'react'
 import { getProducts } from '../service/productsService'
-const Products = () => {
+import Loading from '../components/Loading'
 
+const Products = () => {
     const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true); // Tambahkan state loading
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
+                setLoading(true); // Set loading ke true saat mulai fetching
                 const response = await getProducts();
                 setProducts(response.data);
                 console.log("Data received:", response.data);
             } catch (error) {
                 console.error(error);
+            } finally {
+                setLoading(false); // Set loading ke false setelah selesai (baik sukses atau error)
             }
         };
 
@@ -22,8 +27,8 @@ const Products = () => {
     }, []);
 
     const breadcrumbs = [
-        { name: 'Beranda', href: 'index.html' },
-        { name: 'Semua Produk', href: null }
+        { name: 'Beranda', href: '/' },
+        { name: 'Semua Produk', href: '/products' }
     ]
 
     // Categories filter data
@@ -74,6 +79,7 @@ const Products = () => {
 
     // Pagination data
     const pagination = [1, 2, 3, 4, '...', 7]
+
     return (
         <div className="bg-gray-50 min-h-screen">
             {/* Breadcrumb */}
@@ -210,12 +216,16 @@ const Products = () => {
                             </div>
                         </div>
 
-                        {/* Products Grid */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {products.map((product) => (
-                                <CardProduct key={product.id} product={product} />
-                            ))}
-                        </div>
+                        {/* Tampilkan Loading jika loading true, tampilkan produk jika loading false */}
+                        {loading ? (
+                            <Loading />
+                        ) : (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {products.map((product) => (
+                                    <CardProduct key={product.id} product={product} />
+                                ))}
+                            </div>
+                        )}
 
                         {/* Pagination */}
                         <div className="mt-8 flex justify-center">
