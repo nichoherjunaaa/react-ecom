@@ -10,7 +10,7 @@ const Newsletter = () => {
                     <input
                         type="email"
                         placeholder="Masukkan email Anda"
-                        className="flex-1 px-4 py-3 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-white"
+                        className="flex-1 px-4 py-3 rounded-lg text-gray-800 focus:outline-none border-2 border-white"
                     />
                     <button className="bg-accent text-white px-6 py-3 rounded-lg font-semibold hover:bg-accent/90 transition-colors">
                         Berlangganan

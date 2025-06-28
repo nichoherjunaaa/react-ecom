@@ -20,7 +20,7 @@ const LoginAuth = () => {
 
     return (
         <div className="h-screen flex items-center justify-center p-4 bg-primary">
-            <div className="w-full max-w-6xl h-full max-h-[90vh] relative bg-white">
+            <div className="w-full max-w-6xl h-full max-h-[90vh] relative bg-white rounded-3xl">
                 <div className="login-container rounded-2xl h-full grid grid-cols-2">
                     <div className="p-8 flex flex-col justify-center bg-gradient-to-br from-primary/5 to-secondary/5">
                         <div className="text-center mb-8">

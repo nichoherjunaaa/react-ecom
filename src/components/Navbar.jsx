@@ -39,9 +39,9 @@ const Navbar = () => {
                                 <Link to="/login" className="text-gray-600 hover:text-primary transition-colors px-3 py-1 rounded-lg border border-gray-300 hover:border-primary">
                                     Masuk
                                 </Link>
-                                <button className="bg-primary text-white px-3 py-1 rounded-lg hover:bg-primary/90 transition-colors">
+                                <Link to="/register" className="bg-primary text-white px-3 py-1 rounded-lg hover:bg-primary/90 transition-colors">
                                     Daftar
-                                </button>
+                                </Link>
                             </div>
 
                             {/* Wishlist */}
@@ -51,10 +51,10 @@ const Navbar = () => {
                             </button>
 
                             {/* Cart */}
-                            <button className="relative p-2 text-gray-600 hover:text-primary transition-colors">
+                            <Link to="/cart" className="relative p-2 text-gray-600 hover:text-primary transition-colors">
                                 <i className="fas fa-shopping-cart text-xl"></i>
                                 <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">5</span>
-                            </button>
+                            </Link>
 
                             <div className="relative hidden">
                                 <button className="flex items-center space-x-2 text-gray-600 hover:text-primary transition-colors">
