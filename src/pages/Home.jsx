@@ -3,7 +3,9 @@ import Hero from '../components/Hero';
 import Categories from '../components/Categories';
 import Newsletter from '../components/Newsletter';
 import FeaturedProducts from '../components/FeaturedProducts';
-
+import { apiInstance } from '../api/axios';
+import { getProducts } from '../service/productsService';
+import {useEffect} from 'react';
 const FloatingCartButton = () => (
     <div className="fixed bottom-6 right-6 md:hidden">
         <button className="bg-primary text-white p-4 rounded-full shadow-lg hover:bg-primary/90 transition-colors">
@@ -15,6 +17,7 @@ const FloatingCartButton = () => (
 
 // Main Component
 const Home = () => {
+    
     return (
         <>
             <Hero />

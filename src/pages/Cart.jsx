@@ -146,7 +146,7 @@ const Cart = () => {
             showToast('Pilih minimal 1 produk untuk checkout', 'error');
             return;
         }
-        // Here you would typically navigate to checkout page
+        window.location.href = '/checkout';
         console.log('Proceeding to checkout with items:', summary.selectedItems);
     };
 

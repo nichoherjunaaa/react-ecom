@@ -19,7 +19,7 @@ const Hero = () => {
                         </div>
                     </div>
                     <div className="hidden lg:block">
-                        <img src="/placeholder.svg?height=400&width=500" alt="Hero" className="rounded-lg shadow-2xl" />
+                        <img src="../assets/hero.png" alt="Hero" className="rounded-lg shadow-2xl" />
                     </div>
                 </div>
             </div>

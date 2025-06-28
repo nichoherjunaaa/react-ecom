@@ -1,8 +1,26 @@
 import React from 'react'
 import CardProduct from '../components/CardProduct'
 import { renderStars } from '../utils/helper'
-
+import { useState, useEffect } from 'react'
+import { getProducts } from '../service/productsService'
 const Products = () => {
+
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await getProducts();
+                setProducts(response.data);
+                console.log("Data received:", response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
     const breadcrumbs = [
         { name: 'Beranda', href: 'index.html' },
         { name: 'Semua Produk', href: null }
@@ -43,100 +61,6 @@ const Products = () => {
         'Surabaya',
         'Solo',
         'Malang'
-    ]
-
-    // Products data
-    const products = [
-        {
-            id: 1,
-            name: 'Batik Tulis Premium',
-            location: 'Yogyakarta',
-            price: 320000,
-            originalPrice: 400000,
-            discount: '-20%',
-            rating: 5,
-            reviewCount: 128,
-            tag: 'discount',
-            isWishlisted: false
-        },
-        {
-            id: 2,
-            name: 'Kopi Arabika Gayo',
-            location: 'Aceh',
-            price: 85000,
-            rating: 5,
-            reviewCount: 256,
-            tag: 'bestseller',
-            isWishlisted: false,
-            image : "https://images.unsplash.com/photo-1584880368838-f60e501e7493?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        },
-        {
-            id: 3,
-            name: 'Tas Rajut Handmade',
-            location: 'Bandung',
-            price: 125000,
-            rating: 4,
-            reviewCount: 89,
-            isWishlisted: true
-        },
-        {
-            id: 4,
-            name: 'Keripik Singkong Pedas',
-            location: 'Malang',
-            price: 25000,
-            rating: 5,
-            reviewCount: 45,
-            tag: 'new',
-            isWishlisted: false
-        },
-        {
-            id: 5,
-            name: 'Sabun Herbal Alami',
-            location: 'Bali',
-            price: 35000,
-            rating: 4,
-            reviewCount: 73,
-            isWishlisted: false
-        },
-        {
-            id: 6,
-            name: 'Kemeja Batik Modern',
-            location: 'Solo',
-            price: 180000,
-            rating: 5,
-            reviewCount: 167,
-            tag: 'limited',
-            isWishlisted: false
-        },
-        {
-            id: 7,
-            name: 'Madu Hutan Asli',
-            location: 'Kalimantan',
-            price: 120000,
-            rating: 5,
-            reviewCount: 94,
-            isWishlisted: false
-        },
-        {
-            id: 8,
-            name: 'Gelang Perak Handmade',
-            location: 'Kotagede',
-            price: 450000,
-            rating: 4,
-            reviewCount: 52,
-            tag: 'exclusive',
-            isWishlisted: false
-        },
-        {
-            id: 9,
-            name: 'Teh Herbal Organik',
-            location: 'Bandung',
-            price: 65000,
-            rating: 5,
-            reviewCount: 118,
-            isWishlisted: false,
-            image : "https://images.unsplash.com/photo-1601568656750-bf1a9c205613?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        }
     ]
 
     // Sort options
