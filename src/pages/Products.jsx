@@ -15,7 +15,7 @@ const Products = () => {
                 setLoading(true); // Set loading ke true saat mulai fetching
                 const response = await getProducts();
                 setProducts(response.data);
-                console.log("Data received:", response.data);
+                // console.log("Data received:", response.data);
             } catch (error) {
                 console.error(error);
             } finally {

@@ -1,5 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { formatCurrency, renderStars } from '../utils/helper';
+import { Link, useParams } from 'react-router-dom';
+import { getDetailProduct } from '../service/productsService';
 const ProductDetail = () => {
+    const { id } = useParams();
+
+    const [product, setProduct] = useState({});
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const response = await getDetailProduct(id);
+                setProduct(response.data);
+                setLoading(false);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchProduct();
+    }, [id]);
+
     const [mainImage, setMainImage] = useState('/placeholder.svg?height=500&width=500');
     const [quantity, setQuantity] = useState(1);
     const [selectedSize, setSelectedSize] = useState('S');
@@ -83,23 +104,6 @@ const ProductDetail = () => {
         }
     };
 
-    const formatPrice = (price) => {
-        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(price);
-    };
-
-    const renderStars = (rating) => {
-        return (
-            <div className="flex">
-                {[1, 2, 3, 4, 5].map((star) => (
-                    <i
-                        key={star}
-                        className={`fas ${star <= rating ? 'fa-star' : 'far fa-star'} text-yellow-400`}
-                    />
-                ))}
-            </div>
-        );
-    };
-
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -108,28 +112,10 @@ const ProductDetail = () => {
                     {/* Main Image */}
                     <div className="aspect-square bg-white rounded-lg overflow-hidden shadow-md">
                         <img
-                            src={mainImage}
-                            alt="Batik Tulis Premium"
+                            src={product.image}
+                            alt={product.name}
                             className="w-full h-full object-cover"
                         />
-                    </div>
-
-                    {/* Thumbnail Images */}
-                    <div className="grid grid-cols-4 gap-2">
-                        {thumbnails.map((thumbnail, index) => (
-                            <button
-                                key={index}
-                                className={`aspect-square bg-white rounded-lg overflow-hidden border-2 ${mainImage.includes(thumbnail) ? 'border-primary' : 'border-transparent hover:border-primary'
-                                    } transition-colors`}
-                                onClick={() => changeMainImage(thumbnail.replace('120', '500'))}
-                            >
-                                <img
-                                    src={thumbnail}
-                                    alt={`Batik ${index + 1}`}
-                                    className="w-full h-full object-cover"
-                                />
-                            </button>
-                        ))}
                     </div>
                 </div>
 
@@ -137,11 +123,11 @@ const ProductDetail = () => {
                 <div className="space-y-6">
                     {/* Product Title & Rating */}
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900 mb-2">Batik Tulis Premium Motif Parang</h1>
+                        <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
                         <div className="flex items-center space-x-4 mb-4">
                             <div className="flex items-center">
-                                {renderStars(4.9)}
-                                <span className="ml-2 text-gray-600">4.9 (128 ulasan)</span>
+                                <span className="text-accent">{renderStars(product.rating)}</span>
+                                <span className="ml-2 text-gray-600">{product.rating}.0 ({product.review})</span>
                             </div>
                             <span className="text-gray-400">|</span>
                             <span className="text-gray-600">Terjual 250+</span>
@@ -151,9 +137,9 @@ const ProductDetail = () => {
                     {/* Price */}
                     <div className="bg-gray-50 p-4 rounded-lg">
                         <div className="flex items-center space-x-4">
-                            <span className="text-3xl font-bold text-primary">{formatPrice(320000)}</span>
-                            <span className="text-lg text-gray-500 line-through">{formatPrice(400000)}</span>
-                            <span className="bg-red-500 text-white px-2 py-1 rounded text-sm font-semibold">20% OFF</span>
+                            <span className="text-3xl font-bold text-primary">{formatCurrency(product.price)}</span>
+                            {/* <span className="text-lg text-gray-500 line-through">{formatCurrency(400000)}</span> */}
+                            {/* <span className="bg-red-500 text-white px-2 py-1 rounded text-sm font-semibold">20% OFF</span> */}
                         </div>
                     </div>
 
@@ -177,42 +163,6 @@ const ProductDetail = () => {
 
                     {/* Product Variants */}
                     <div className="space-y-4">
-                        {/* Size Selection */}
-                        <div>
-                            <h3 className="font-semibold text-gray-900 mb-2">Ukuran</h3>
-                            <div className="flex space-x-2">
-                                {sizes.map((size) => (
-                                    <button
-                                        key={size}
-                                        className={`px-4 py-2 border-2 rounded-lg font-medium ${selectedSize === size
-                                                ? 'border-primary bg-primary text-white'
-                                                : 'border-gray-300 text-gray-700 hover:border-primary'
-                                            } transition-colors`}
-                                        onClick={() => setSelectedSize(size)}
-                                    >
-                                        {size}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Color Selection */}
-                        <div>
-                            <h3 className="font-semibold text-gray-900 mb-2">Warna</h3>
-                            <div className="flex space-x-2">
-                                {colors.map((color) => (
-                                    <button
-                                        key={color.name}
-                                        className={`w-8 h-8 ${color.class} rounded-full border-2 ${selectedColor === color.name
-                                                ? 'border-primary'
-                                                : 'border-gray-300 hover:border-primary'
-                                            } transition-colors`}
-                                        onClick={() => setSelectedColor(color.name)}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-
                         {/* Quantity */}
                         <div>
                             <h3 className="font-semibold text-gray-900 mb-2">Jumlah</h3>
@@ -232,7 +182,7 @@ const ProductDetail = () => {
                                         +
                                     </button>
                                 </div>
-                                <span className="text-gray-600">Stok: 25 tersedia</span>
+                                <span className="text-gray-600">Stok: {product.stock} tersedia</span>
                             </div>
                         </div>
                     </div>
@@ -285,12 +235,6 @@ const ProductDetail = () => {
                             Deskripsi
                         </button>
                         <button
-                            className={`py-4 px-1 border-b-2 ${activeTab === 'specifications' ? 'border-primary text-primary' : 'border-transparent text-gray-500 hover:text-gray-700'} font-medium`}
-                            onClick={() => setActiveTab('specifications')}
-                        >
-                            Spesifikasi
-                        </button>
-                        <button
                             className={`py-4 px-1 border-b-2 ${activeTab === 'reviews' ? 'border-primary text-primary' : 'border-transparent text-gray-500 hover:text-gray-700'} font-medium`}
                             onClick={() => setActiveTab('reviews')}
                         >
@@ -306,10 +250,9 @@ const ProductDetail = () => {
                         <div className="prose max-w-none">
                             <h3 className="text-xl font-semibold mb-4">Deskripsi Produk</h3>
                             <p className="text-gray-700 mb-4">
-                                Batik Tulis Premium dengan motif Parang yang dibuat secara handmade oleh pengrajin batik berpengalaman dari Yogyakarta.
-                                Menggunakan bahan katun berkualitas tinggi yang nyaman digunakan dan tahan lama.
+                                {product.description}
                             </p>
-                            <p className="text-gray-700 mb-4">
+                            {/* <p className="text-gray-700 mb-4">
                                 Motif Parang merupakan salah satu motif batik klasik yang memiliki makna filosofis mendalam,
                                 melambangkan kekuatan, keteguhan, dan semangat pantang menyerah.
                             </p>
@@ -320,69 +263,7 @@ const ProductDetail = () => {
                                 <li>Bahan katun premium yang nyaman dan breathable</li>
                                 <li>Motif klasik dengan kualitas finishing yang rapi</li>
                                 <li>Cocok untuk acara formal maupun casual</li>
-                            </ul>
-                        </div>
-                    )}
-
-                    {/* Specifications Tab */}
-                    {activeTab === 'specifications' && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <h3 className="text-xl font-semibold mb-4">Spesifikasi Produk</h3>
-                                <table className="w-full text-sm">
-                                    <tbody>
-                                        <tr className="border-b">
-                                            <td className="py-2 font-medium text-gray-900">Bahan</td>
-                                            <td className="py-2 text-gray-700">Katun Premium</td>
-                                        </tr>
-                                        <tr className="border-b">
-                                            <td className="py-2 font-medium text-gray-900">Teknik</td>
-                                            <td className="py-2 text-gray-700">Batik Tulis</td>
-                                        </tr>
-                                        <tr className="border-b">
-                                            <td className="py-2 font-medium text-gray-900">Motif</td>
-                                            <td className="py-2 text-gray-700">Parang Klasik</td>
-                                        </tr>
-                                        <tr className="border-b">
-                                            <td className="py-2 font-medium text-gray-900">Asal</td>
-                                            <td className="py-2 text-gray-700">Yogyakarta</td>
-                                        </tr>
-                                        <tr className="border-b">
-                                            <td className="py-2 font-medium text-gray-900">Ukuran</td>
-                                            <td className="py-2 text-gray-700">S, M, L, XL</td>
-                                        </tr>
-                                        <tr className="border-b">
-                                            <td className="py-2 font-medium text-gray-900">Berat</td>
-                                            <td className="py-2 text-gray-700">300 gram</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div>
-                                <h3 className="text-xl font-semibold mb-4">Panduan Perawatan</h3>
-                                <ul className="space-y-2 text-sm text-gray-700">
-                                    <li className="flex items-start">
-                                        <i className="fas fa-check text-primary mr-2 mt-1"></i>
-                                        Cuci dengan air dingin atau suam-suam kuku
-                                    </li>
-                                    <li className="flex items-start">
-                                        <i className="fas fa-check text-primary mr-2 mt-1"></i>
-                                        Gunakan deterjen yang lembut
-                                    </li>
-                                    <li className="flex items-start">
-                                        <i className="fas fa-check text-primary mr-2 mt-1"></i>
-                                        Jangan gunakan pemutih
-                                    </li>
-                                    <li className="flex items-start">
-                                        <i className="fas fa-check text-primary mr-2 mt-1"></i>
-                                        Jemur di tempat teduh, hindari sinar matahari langsung
-                                    </li>
-                                    <li className="flex items-start">
-                                        <i className="fas fa-check text-primary mr-2 mt-1"></i>
-                                        Setrika dengan suhu sedang
-                                    </li>
-                                </ul>
-                            </div>
+                            </ul> */}
                         </div>
                     )}
 
@@ -465,7 +346,7 @@ const ProductDetail = () => {
             </div>
 
             {/* Related Products */}
-            <div className="mt-16">
+            {/* <div className="mt-16">
                 <h2 className="text-2xl font-bold text-gray-900 mb-8">Produk Serupa</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {relatedProducts.map((product, index) => (
@@ -488,7 +369,7 @@ const ProductDetail = () => {
                                     <span className="text-gray-600 text-sm ml-2">({product.reviewCount})</span>
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-lg font-bold text-primary">{formatPrice(product.price)}</span>
+                                    <span className="text-lg font-bold text-primary">{formatCurrency(product.price)}</span>
                                     <button className="bg-primary text-white px-3 py-1 rounded-lg hover:bg-primary/90 transition-colors">
                                         <i className="fas fa-cart-plus"></i>
                                     </button>
@@ -497,7 +378,7 @@ const ProductDetail = () => {
                         </div>
                     ))}
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };
