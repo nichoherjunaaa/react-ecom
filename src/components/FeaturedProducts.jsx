@@ -9,7 +9,7 @@ const FEATURED_PRODUCTS = [
         originalPrice: 400000,
         discount: "-20%",
         rating: 5,
-        reviewCount: 128,
+        review: 128,
         image: "/placeholder.svg?height=200&width=300",
         tag: "discount",
         isWishlisted: false
@@ -20,7 +20,7 @@ const FEATURED_PRODUCTS = [
         location: "Aceh",
         price: 85000,
         rating: 5,
-        reviewCount: 256,
+        review: 256,
         image: "/placeholder.svg?height=200&width=300",
         tag: "bestseller",
         isWishlisted: false,
@@ -32,7 +32,7 @@ const FEATURED_PRODUCTS = [
         location: "Bandung",
         price: 125000,
         rating: 4,
-        reviewCount: 89,
+        review: 89,
         image: "/placeholder.svg?height=200&width=300",
         isWishlisted: true
     },
@@ -42,7 +42,7 @@ const FEATURED_PRODUCTS = [
         location: "Malang",
         price: 25000,
         rating: 5,
-        reviewCount: 45,
+        review: 45,
         image: "/placeholder.svg?height=200&width=300",
         tag: "new",
         isWishlisted: false

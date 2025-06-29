@@ -1,8 +1,9 @@
 import React from 'react'
 import { formatCurrency, getTagStyle, getTagText, renderStars } from '../utils/helper'
+import { Link } from 'react-router-dom';
 const CardProduct = ({ product }) => {
     return (
-        <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow group">
+        <Link to={`/product`} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow group">
             <div className="relative">
                 <img
                     src={product.image}
@@ -47,7 +48,7 @@ const CardProduct = ({ product }) => {
                     </button>
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }
 

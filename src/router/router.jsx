@@ -7,6 +7,7 @@ import NotFound from '../pages/NotFound'
 import LoginAuth from '../pages/Auth/Login/LoginAuth'
 import Checkout from '../pages/Checkout'
 import Cart from '../pages/Cart'
+import ProductDetail from '../pages/ProductDetail'
 const router = createBrowserRouter([
     {
         path: "/",
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
             {
                 path: "products",
                 element: <Products/>
+            },
+            {
+                path: "product",
+                element : <ProductDetail/>
             },
             {
                 path: "checkout",
